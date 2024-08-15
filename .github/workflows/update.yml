@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-blacklist:
+  update-china-domain-list:
     runs-on: ubuntu-latest
 
     steps:
