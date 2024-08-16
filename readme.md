@@ -10,14 +10,14 @@
 #!/bin/sh
 
 # 检查网络连接
-ping -c 1 fastly.jsdelivr.net > /dev/null 2>&1
+ping -c 5 ghproxy.net > /dev/null 2>&1
 if [ $? -ne 0 ]; then
   echo "网络连接失败，请检查网络连接。"
   exit 1
 fi
 
 # 下载配置文件
-wget -O "/tmp/china.conf" https://fastly.jsdelivr.net/gh/jqtmviyu/smartdns-china-domain@main/smartdns-domains.china.conf
+wget -O "/tmp/china.conf" https://ghproxy.net/https://raw.githubusercontent.com/jqtmviyu/smartdns-china-domain/main/smartdns-domains.china.conf
 if [ $? -ne 0 ]; then
   echo "下载 china.conf 失败。"
   exit 1
