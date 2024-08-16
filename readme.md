@@ -68,11 +68,11 @@ server-tls 1.1.1.1 -host-name 1dot1dot1dot1.cloudflare-dns.com -group gfw
 # Quad9DNS
 server-https https://9.9.9.9:5053/dns-query -group gfw
 
-# lan地址
+# lan地址, 必须 *- 没有a, 应该是bug
 address /*-.example.lan/192.168.2.5
 
 # 关闭ddns域名的缓存, 域名过期缓存, 设置china组
-domain-rules /*-.example.com/ -no-cache -no-serve-expired -nameserver china
+domain-rules /*-a.example.com/ -no-cache -no-serve-expired -nameserver china
 
 # 加载china域名
 domain-set -name china -file /etc/smartdns/domain-set/china.conf
