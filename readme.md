@@ -2,7 +2,7 @@
 
 适用于 smartdns 的中国网站白名单，内容来自 [felixonmars/dnsmasq-china-list](https://github.com/felixonmars/dnsmasq-china-list)，纯列表，自动更新。
 
-## 使用步骤
+## 使用步骤(白名单模式)
 
 1. 添加定时任务下载文件 `smartdns-domains.china.conf`到 `/etc/smartdns/domain-set/` 目录下
 
@@ -37,6 +37,11 @@ echo  "重启smartdns"
 需要先手动下载 `/etc/smartdns/domain-set/china.conf`,否则自定义设置会报错
 
 ```conf
+# 缓存持久化文件路径
+cache-file	/root/smartdns.cache
+# 周期持久化
+cache-checkpoint-time 43200
+
 # 广东电信
 server 202.96.128.86 -group china  -exclude-default-group
 server 240e:1f:1::1 -group china  -exclude-default-group
@@ -73,9 +78,6 @@ domain-rules /*-.example.com/ -no-cache -no-serve-expired -nameserver china
 domain-set -name china -file /etc/smartdns/domain-set/china.conf
 # china域名 china组 默认测速 允许ipv6 双栈优选 首次查询最快ping
 domain-rules /domain-set:china/  -nameserver china -speed-check-mode ping,tcp:80,tcp:443 -address -6 -dualstack-ip-selection yes -response-mode first-ping
-
-# 全局 gfw组 不测速 禁用ipv6 禁用双栈优选 首次查询最快响应
-domain-rules /./  -nameserver gfw -speed-check-mode none -address #6 dualstack-ip-selection no -response-mode fastest-response
 ```
 
 ## openwrt 路由器设置参考
@@ -93,3 +95,17 @@ domain-rules /./  -nameserver gfw -speed-check-mode none -address #6 dualstack-i
 ### 第二dns服务器
 
 ![](./sceenshorts/4.jpg)
+
+### 验证
+
+日志设置`info`
+
+```sh
+ping github.com -c 5
+cat /tmp/log/smartdns/smartdns.log | grep github.com | grep group
+# group是default
+
+ping baidu.com -c 5
+cat /tmp/log/smartdns/smartdns.log | grep baidu.com | grep group
+# group是china
+```
