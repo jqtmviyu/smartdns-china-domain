@@ -23,7 +23,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# 移动配置文件并清理临时目录
+# 替换配置文件
 mv -f /tmp/china.conf /etc/smartdns/domain-set/china.conf
 echo '替换配置文件'
 
@@ -45,7 +45,7 @@ server 210.21.196.6 -group china  -exclude-default-group
 server 2408:8899::8 -group china  -exclude-default-group
 # 广东移动
 server 211.136.192.6 -group china  -exclude-default-group
-# server 2409:8088:: -group china  -exclude-default-group
+server 2409:8088:: -group china  -exclude-default-group
 # 腾讯
 server 119.29.29.29 -group china  -exclude-default-group
 # 阿里
