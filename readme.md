@@ -23,10 +23,10 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# 替换配置文件
-mv -f /tmp/china.conf /etc/smartdns/domain-set/china.conf
+# 替换配置文件,放root重启不会丢失
+mv -f /tmp/china.conf /root/china.conf
 echo '替换配置文件'
-
+oot
 # 重新加载 smartdns
 /etc/init.d/smartdns reload
 echo  "重启smartdns"
@@ -34,7 +34,7 @@ echo  "重启smartdns"
 
 2. SmartDNS 自定义设置
 
-需要先手动下载 `/etc/smartdns/domain-set/china.conf`,否则自定义设置会报错
+需要先手动下载 `/root/china.conf`,否则自定义设置会报错
 
 ```conf
 # 缓存持久化文件路径
@@ -75,7 +75,7 @@ address /*-.example.lan/192.168.2.5
 domain-rules /*-a.example.com/ -no-cache -no-serve-expired -nameserver china
 
 # 加载china域名
-domain-set -name china -file /etc/smartdns/domain-set/china.conf
+domain-set -name china -file /root/china.conf
 # china域名 china组 默认测速 允许ipv6 双栈优选 首次查询最快ping
 domain-rules /domain-set:china/  -nameserver china -speed-check-mode ping,tcp:80,tcp:443 -address -6 -dualstack-ip-selection yes -response-mode first-ping
 ```
