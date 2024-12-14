@@ -26,7 +26,7 @@ fi
 # 替换配置文件,放root重启不会丢失
 mv -f /tmp/china.conf /root/china.conf
 echo '替换配置文件'
-oot
+
 # 重新加载 smartdns
 /etc/init.d/smartdns reload
 echo  "重启smartdns"
